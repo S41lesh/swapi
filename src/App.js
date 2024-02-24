@@ -7,8 +7,7 @@ function App() {
   const [planets, setPlanets] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
-  const [page, setPage] = useState(1); // State to keep track of current page number
-
+  const [page, setPage] = useState(1);
   useEffect(() => {
     fetchPlanets('https://swapi.dev/api/planets/?format=json');
   }, []);
@@ -19,8 +18,8 @@ function App() {
       const data = await response.json();
       setPlanets(data.results);
       setNextPage(data.next);
-      setPreviousPage(data.previous); // Set previous page URL
-      setPage(1); // Reset page number
+      setPreviousPage(data.previous);
+      setPage(1);
     } catch (error) {
       console.error('Error fetching planets:', error);
     }
@@ -34,7 +33,7 @@ function App() {
         setPlanets(prevPlanets => [...prevPlanets, ...data.results]);
         setNextPage(data.next);
         setPreviousPage(data.previous);
-        setPage(page + 1); // Increment page number
+        setPage(page + 1);
       }
     } catch (error) {
       console.error('Error fetching next page:', error);
@@ -49,7 +48,7 @@ function App() {
         setPlanets(data.results);
         setNextPage(data.next);
         setPreviousPage(data.previous);
-        setPage(page - 1); // Decrement page number
+        setPage(page - 1);
       }
     } catch (error) {
       console.error('Error fetching previous page:', error);
@@ -57,22 +56,23 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <header>
-          <h1>Star Wars Planets Directory</h1>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage planets={planets} nextPage={nextPage} fetchNextPage={fetchNextPage} fetchPreviousPage={fetchPreviousPage} page={page} />} />
-            <Route path="/planet/:id" element={<PlanetDetailsPage planets={planets} />} />
-          </Routes>
-        </main>
-        <footer>
-          <p>© 2024 Star Wars</p>
-        </footer>
-      </div>
-    </Router>
+  <Router>
+    <div className="App">
+      <header>
+        <h1>Star Wars Planets Directory</h1>
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage planets={planets} nextPage={nextPage} fetchNextPage={fetchNextPage} fetchPreviousPage={fetchPreviousPage} page={page} />} />
+          <Route path="/planet/:id" element={<PlanetDetailsPage planets={planets} />} />
+        </Routes>
+      </main>
+      <footer className="footer"> {}
+        <p>© 2024 Star Wars</p>
+      </footer>
+    </div>
+  </Router>
+
   );
 }
 
